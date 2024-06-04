@@ -7,6 +7,6 @@
 
 #### Usefull Sources
 
-http://www.ctyme.com/intr/int-10.htm
+http://www.ctyme.com/rbrown.htm
 
 https://wiki.osdev.org/
