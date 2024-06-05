@@ -11,7 +11,7 @@ _start:
 times 33 db 0
 
 start:
-    jmp 0:step2
+    jmp 0x7c0:step2
 
 step2:
     cli                     ; Clear interruptions
@@ -71,6 +71,12 @@ load32:
     mov ss, ax
     mov ebp, 0x00200000
     mov esp, ebp
+
+    ; Enable A20 line
+    in al, 0x92
+    or al, 2
+    out 0x92, al
+
     jmp $
 
 times 510-($ - $$) db 0     ; fill at least 510 bytes of data. Otherwise, will output zeros after the hello world thing
