@@ -4,12 +4,17 @@
 sudo apt install -y qemu-system-x86 bison flex build-essential libgmp3-dev libmpc-dev libmpfr-dev texinfo libisl-dev
 
 
-# VSCOde extension for assembly
-
+# VSCOde extension for assembly and linkerscript
+LinkerScript ZixuanWang
 x86 and x86_64 Assembly by 13xforever
 
-# Binutils 2.35
+# Binutils 2.42
 https://www.gnu.org/software/binutils/
 
 # GCC 10.2.0
 https://www.gnu.org/software/gcc/mirrors.html
+
+
+export PREFIX="$HOME/opt/cross"
+export TARGET=i686-elf
+export PATH="$PREFIX/bin:$PATH"

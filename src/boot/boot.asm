@@ -30,6 +30,7 @@ step2:
     or eax, 0x1
     mov cr0, eax
     jmp CODE_SEG:load32
+    jmp $
 
 ; GDT
 gdt_start:
@@ -63,21 +64,65 @@ gdt_descriptor:
 
 [BITS 32]
 load32:
-    mov ax, DATA_SEG
-    mov ds, ax
-    mov es, ax
-    mov fs, ax
-    mov gs, ax
-    mov ss, ax
-    mov ebp, 0x00200000
-    mov esp, ebp
+    mov eax, 1              ; Sector 1, cause bios is 0
+    mov ecx, 100
+    mov edi, 0x0100000
+    call ata_lba_read
+    jmp CODE_SEG:0x010000
 
-    ; Enable A20 line
-    in al, 0x92
-    or al, 2
-    out 0x92, al
+; https://wiki.osdev.org/ATA_read/write_sectors
+; Start of ata driver 
+ata_lba_read:
+    mov ebx, eax            ; Backup the LBA
+    shr eax, 24             ; Send the highest 8 bits of the lba to hard disk controller
+    or eax, 0xE0            ; Select master drive
+    mov dx, 0x1F6
+    out dx, al              ; Finished sending the 8 highest bits to the lba
 
-    jmp $
+    ; Send the total sector to read
+    mov eax, ecx
+    mov dx, 0x1F2
+    out dx, al
+    ; Finished sending
+
+    mov eax, ebx             ; Restore backup from later
+    mov dx, 0x1F3
+    out dx, al
+
+    ; Send more bits of the lba
+    mov dx, 0x1F4
+    mov eax, ebx
+    shr eax, 8
+    out dx, al
+    ; finished
+
+    ; Send upper 16 bits of the lba
+    mov dx, 0x1F5
+    mov eax, ebx
+    shr eax, 16
+    out dx, al
+
+    mov dx, 0x1f7
+    mov al, 0x20
+    out dx, al
+
+.next_sector:
+    push ecx
+
+.try_again:
+    mov dx, 0x1f7
+    in al, dx
+    test al, 8
+    jz .try_again
+
+    ; Need to read 256 words at a time
+    mov ecx, 256
+    mov dx, 0x1F
+    rep insw
+    pop ecx
+    loop .next_sector
+
+    ret
 
 times 510-($ - $$) db 0     ; fill at least 510 bytes of data. Otherwise, will output zeros after the hello world thing
 dw 0xAA55                   ; bootloades sector
@@ -99,4 +144,7 @@ dw 0xAA55                   ; bootloades sector
 ; dd if=./boot.bin of=/dev/<usb disk>
 
 ; gdb stuff
-; target remote | qemu-system-x86_64 -hda ./boot.bin -S -gdb stdio
+; target remote | qemu-system-x86_64 -hda ./bin/boot.bin -S -gdb stdio
+; c
+; layout asm
+; info registers
