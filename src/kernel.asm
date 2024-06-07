@@ -1,4 +1,7 @@
 [BITS 32]
+
+section .asm
+
 global_start
 
 CODE_SEG equ 0x08
@@ -20,3 +23,6 @@ _start:
     out 0x92, al
 
     jmp $
+
+; alignment issues solver
+times 512-($ - $$) db 0
