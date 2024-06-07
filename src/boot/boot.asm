@@ -11,7 +11,7 @@ _start:
 times 33 db 0
 
 start:
-    jmp 0x7c0:step2
+    jmp 0:step2
 
 step2:
     cli                     ; Clear interruptions
@@ -30,7 +30,6 @@ step2:
     or eax, 0x1
     mov cr0, eax
     jmp CODE_SEG:load32
-    jmp $
 
 ; GDT
 gdt_start:
@@ -42,7 +41,7 @@ gdt_null:
 gdt_code:                   ; CS should point to dis
     dw 0xffff               ; Segment limit first 0-15 bits
     dw 0                    ; Base first 0-15 bits
-    dw 0                    ; Base 16-23 bits
+    db 0                    ; Base 16-23 bits
     db 0x9a                 ; Access byte
     db 11001111b            ; High 4 bit flas and low 4 bit flags
     db 0                    ; Bse 24-31 bits
@@ -51,7 +50,7 @@ gdt_code:                   ; CS should point to dis
 gdt_data:                   ; ds, ss, es, fs, gs
     dw 0xffff               ; Segment limit first 0-15 bits
     dw 0                    ; Base first 0-15 bits
-    dw 0                    ; Base 16-23 bits
+    db 0                    ; Base 16-23 bits
     db 0x92                 ; Access byte
     db 11001111b            ; High 4 bit flas and low 4 bit flags
     db 0                    ; Bse 24-31 bits
@@ -68,7 +67,7 @@ load32:
     mov ecx, 100
     mov edi, 0x0100000
     call ata_lba_read
-    jmp CODE_SEG:0x010000
+    jmp CODE_SEG:0x0100000
 
 ; https://wiki.osdev.org/ATA_read/write_sectors
 ; Start of ata driver 
@@ -117,7 +116,7 @@ ata_lba_read:
 
     ; Need to read 256 words at a time
     mov ecx, 256
-    mov dx, 0x1F
+    mov dx, 0x1F0
     rep insw
     pop ecx
     loop .next_sector
