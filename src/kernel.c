@@ -1,6 +1,7 @@
 #include "kernel.h"
 #include <stdint.h>
 #include <stddef.h>
+#include "idt/idt.h"
 
 uint16_t* video_mem = 0; //(uint16_t*)(0xB8000);
 uint16_t terminal_row = 0;
@@ -64,10 +65,18 @@ void print(const char* str){
     }
 }
 
+//extern void problem();
+
 void kernel_main(){
     
     terminal_initialize();
     print("Hello World!\nThis is a new line bitch");
+
+    //Initialize the interrup
+    idt_init();
+
+    //problem();
+
     //terminal_writechar('A', 15);
 
     //video_mem[0] = terminal_make_char('B', 15);
