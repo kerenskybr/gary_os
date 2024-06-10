@@ -1,7 +1,7 @@
 [BITS 32]
 
 global _start
-global problem
+;global problem
 
 extern kernel_main
 
@@ -27,9 +27,9 @@ _start:
     jmp $
 
 ; causing a problem for test (divide by zero)
-problem:
-    mov eax, 0
-    div eax
+; problem:
+;     mov eax, 0
+;     div eax
 
 ; alignment issues solver
 times 512-($ - $$) db 0

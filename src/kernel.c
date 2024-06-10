@@ -65,7 +65,7 @@ void print(const char* str){
     }
 }
 
-extern void problem();
+//extern void problem();
 
 void kernel_main(){
     
@@ -75,7 +75,7 @@ void kernel_main(){
     //Initialize the interrup
     idt_init();
 
-    problem();
+    //problem();
 
     //terminal_writechar('A', 15);
 
