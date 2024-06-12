@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "idt/idt.h"
-
+#include "io/io.h"
 uint16_t* video_mem = 0; //(uint16_t*)(0xB8000);
 uint16_t terminal_row = 0;
 uint16_t terminal_col = 0;
@@ -77,6 +77,8 @@ void kernel_main(){
 
     //problem();
 
+    // 
+    // outb(0x60, 0xff)
     //terminal_writechar('A', 15);
 
     //video_mem[0] = terminal_make_char('B', 15);
