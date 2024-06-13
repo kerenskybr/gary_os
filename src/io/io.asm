@@ -9,7 +9,7 @@ global outw
 insb:
     push ebp
     mov ebp, esp
-    
+
     xor eax, eax
     mov edx, [ebp+8]
     in al, dx
@@ -20,7 +20,7 @@ insb:
 insw:
     push ebp
     mov ebp, esp
-    
+
     xor eax, eax
     mov edx, [ebp+8]
     in ax, dx
@@ -31,9 +31,10 @@ insw:
 outb:
     push ebp
     mov ebp, esp
-    
-    mov edx, [ebp+12]
-    in dx, al
+
+    mov eax, [ebp+12]
+    mov edx, [ebp+8]
+    out dx, al
 
     pop ebp
     ret
@@ -41,10 +42,10 @@ outb:
 outw:
     push ebp
     mov ebp, esp
-    
+
     mov eax, [ebp+12]
     mov edx, [ebp+8]
-    out dx, al
+    out dx, ax
 
     pop ebp
     ret
