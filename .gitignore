@@ -1,2 +1,5 @@
 *.bin
 /*.bin
+*.o
+*.asm.o
+build/*/*.o
