@@ -2,4 +2,5 @@
 /*.bin
 *.o
 *.asm.o
-build/*/*.o
+build/*.o
+build/*/*/*.o
