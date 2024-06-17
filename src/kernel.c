@@ -3,6 +3,8 @@
 #include <stddef.h>
 #include "idt/idt.h"
 #include "io/io.h"
+#include "memory/heap/kheap.h"
+
 uint16_t* video_mem = 0; //(uint16_t*)(0xB8000);
 uint16_t terminal_row = 0;
 uint16_t terminal_col = 0;
@@ -72,8 +74,24 @@ void kernel_main(){
     terminal_initialize();
     print("Hello World!\nThis is a new line bitch");
 
+    // Initialize heap memory
+    kheap_init();
+
     //Initialize the interrup
     idt_init();
+
+    // Testing memory heap
+    void* ptr = kmalloc(50);
+    void* ptr2 = kmalloc(5000);
+    void* ptr3 = kmalloc(5000);
+    
+    kfree(ptr);
+
+    void* ptr4 = kmalloc(50);
+
+    if (ptr || ptr2 || ptr3 || ptr4){
+
+    }
 
     //problem();
 
