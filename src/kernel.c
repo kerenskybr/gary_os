@@ -80,18 +80,22 @@ void kernel_main(){
     //Initialize the interrup
     idt_init();
 
+    // Enable interrupts
+    enable_interrupts();
+
+
     // Testing memory heap
-    void* ptr = kmalloc(50);
-    void* ptr2 = kmalloc(5000);
-    void* ptr3 = kmalloc(5000);
+    // void* ptr = kmalloc(50);
+    // void* ptr2 = kmalloc(5000);
+    // void* ptr3 = kmalloc(5000);
     
-    kfree(ptr);
+    // kfree(ptr);
 
-    void* ptr4 = kmalloc(50);
+    // void* ptr4 = kmalloc(50);
 
-    if (ptr || ptr2 || ptr3 || ptr4){
+    // if (ptr || ptr2 || ptr3 || ptr4){
 
-    }
+    // }
 
     //problem();
 
