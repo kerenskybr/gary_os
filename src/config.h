@@ -10,4 +10,7 @@
 #define GARYOS_HEAP_ADDRESS 0x01000000 // https://wiki.osdev.org/Memory_Map_(x86) 
 #define GARYOS_HEAP_TABLE_ADDRESS 0x00007E00
 
+// Disk controller stuff
+#define GARYOS_SECTOR_SIZE 512
+
 #endif
