@@ -24,7 +24,7 @@ cd bin
 gdb
 add-symbol-file ../build/kernelfull.o 0x100000
 target remote | qemu-system-i386 -hda ./os.bin -S -gdb stdio
-break kernel.c:89
+break kernel.c:102
 c
 print ptr
 print ptr2
