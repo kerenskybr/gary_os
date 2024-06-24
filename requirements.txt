@@ -32,3 +32,15 @@ print ptr3
 print ptr4 
 
 # ptr4 now will occupi ptr position, cause we freeded 
+
+# Testing FAT
+
+sudo mkdir /mnt/d
+sudo mount -t vfat ./os.bin /mnt/d
+
+cd /mnt/d
+sudo touch ./hello.txt
+sudo nano hello.txt
+
+# now the content of the file will be in the OS
+# Can be checked using bless
