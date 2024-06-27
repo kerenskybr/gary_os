@@ -23,7 +23,7 @@ int diskstreamer_seek(struct disk_stream* stream, int pos){
     return 0;
 }
 
-int dikstreamer_read(struct disk_stream* stream, void* out, int total){
+int diskstreamer_read(struct disk_stream* stream, void* out, int total){
 
     int sector = stream->pos / GARYOS_SECTOR_SIZE;
     int offset = stream->pos % GARYOS_SECTOR_SIZE;
@@ -47,14 +47,14 @@ int dikstreamer_read(struct disk_stream* stream, void* out, int total){
 
     if (total > GARYOS_SECTOR_SIZE){
 
-        res = dikstreamer_read(stream, out, total - GARYOS_SECTOR_SIZE);
+        res = diskstreamer_read(stream, out, total - GARYOS_SECTOR_SIZE);
     }
 
 out:
     return res;
 }
 
-void diskstream_close(struct disk_stream* stream){
+void diskstreamer_close(struct disk_stream* stream){
 
     kfree(stream);
 }
