@@ -14,7 +14,13 @@ struct disk{
     GARYOS_DISK_TYPE type;
     int sector_size;
 
+    // The id of the disk
+    int id;
+
     struct filesystem* filesystem;
+
+    // private adta of the file system
+    void* fs_private;
 };
 
 void disk_search_and_init();
