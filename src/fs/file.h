@@ -17,7 +17,7 @@ enum{
     FILE_MODE_READ,
     FILE_MODE_WRITE,
     FILE_MODE_APPEND,
-    FILE_MMODE_INVALID
+    FILE_MODE_INVALID
 };
 
 struct disk;
@@ -45,7 +45,7 @@ struct file_descriptor{
 };
 
 void fs_init();
-int fopen(const char* filename, const char* mode);
+int fopen(const char* filename, const char* mode_str);
 void fs_insert_filesystem(struct filesystem* filesystem);
 struct filesystem* fs_resolve(struct disk* disk);
 
