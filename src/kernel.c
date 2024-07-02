@@ -105,9 +105,16 @@ void kernel_main(){
     enable_interrupts();
 
     int fd = fopen("0:/hello.txt", "r");
+    
     if (fd){
         
-        print("\n hello.txt oppened \n");
+        print("\nhello.txt oppened \n");
+        
+        char buf[26];
+        // REading from disk
+        fread(buf, 26, 1, fd);
+        buf[26] = 0x00;
+        print(buf);
     }
     while(1){
 
