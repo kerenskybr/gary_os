@@ -111,6 +111,8 @@ void kernel_main(){
         print("\nhello.txt oppened \n");
         
         char buf[26];
+        // Testing seek
+        fseek(fd, 2, SEEK_SET);
         // REading from disk
         fread(buf, 26, 1, fd);
         buf[26] = 0x00;
