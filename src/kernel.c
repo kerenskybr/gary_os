@@ -108,15 +108,18 @@ void kernel_main(){
     
     if (fd){
         
-        print("\nhello.txt oppened \n");
+        struct file_stat s;
+        fstat(fd, &s);
+
+        // print("\nhello.txt oppened \n");
         
-        char buf[26];
-        // Testing seek
-        fseek(fd, 2, SEEK_SET);
-        // REading from disk
-        fread(buf, 26, 1, fd);
-        buf[26] = 0x00;
-        print(buf);
+        // char buf[26];
+        // // Testing seek
+        // fseek(fd, 2, SEEK_SET);
+        // // REading from disk
+        // fread(buf, 26, 1, fd);
+        // buf[26] = 0x00;
+        // print(buf);
     }
     while(1){
 
