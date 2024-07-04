@@ -634,6 +634,14 @@ void* fat16_open(struct disk* disk, struct path_part* path, FILE_MODE mode){
     return descriptor;
 }
 
+int fat16_stat(struct disk* disk, void* private, struct file_stat* stat){
+
+    int res = 0;
+    struct fat_file_descriptor* descriptor = (struct fat_file_descriptor*) private;
+    struct fat_item* desc_item = descriptor->item;
+    return res;
+}
+
 int fat16_read(struct disk* disk, void* descriptor, uint32_t size, uint32_t nmemb, char* out_ptr){
 
     int res = 0;
