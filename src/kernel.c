@@ -76,10 +76,19 @@ void print(const char* str){
 //extern void problem();
 
 static struct paging_4gb_chunk* kernel_chunk = 0;
+
+void panic(const char* msg){
+
+    print(msg);
+    while(1) {};
+}
+
 void kernel_main(){
     
     terminal_initialize();
     print("Hello World!\nThis is a new line bitch");
+
+    panic("\nTEsting kernel panic!\n");
 
     // Initialize heap memory
     kheap_init();
