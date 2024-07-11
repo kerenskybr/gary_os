@@ -8,7 +8,7 @@ struct process{
 
     uint16_t id;
 
-    char filename[GARYOS_MAXPATH];
+    char filename[GARYOS_MAX_PATH];
 
     struct task* task;
 
@@ -24,5 +24,7 @@ struct process{
     // Size of the data pointer
     uint32_t size;
 };
+
+int process_load_for_slot(const char* filename, struct process** process, int process_slot);
 
 #endif
