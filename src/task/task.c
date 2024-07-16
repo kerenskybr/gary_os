@@ -5,12 +5,15 @@
 #include "memory/memory.h"
 #include "process.h"
 
+// The current task that is running
 struct task* current_task = 0;
 
+// Task linked list
 struct task* task_tail = 0;
 struct task* task_head = 0;
 
 int task_init(struct task* task, struct process* process);
+
 
 struct task* task_current(){
 
@@ -28,8 +31,7 @@ struct task* task_new(struct process* process){
     }
 
     res = task_init(task, process);
-
-    if(res != GARYOS_ALL_OK){
+    if (res != GARYOS_ALL_OK){
 
         goto out;
     }
@@ -38,7 +40,7 @@ struct task* task_new(struct process* process){
 
         task_head = task;
         task_tail = task;
-
+        current_task = task;
         goto out;
     }
 
@@ -46,7 +48,7 @@ struct task* task_new(struct process* process){
     task->prev = task_tail;
     task_tail = task;
 
-out:
+out:    
     if (ISERR(res)){
 
         task_free(task);
@@ -94,7 +96,7 @@ int task_free(struct task* task){
     paging_free_4gb(task->page_directory);
     task_list_remove(task);
 
-    //Finally free the task data
+    // Finally free the task data
     kfree(task);
     return 0;
 }
@@ -109,14 +111,14 @@ int task_switch(struct task* task){
 int task_page(){
 
     user_registers();
-    task_switch(current_task);   
+    task_switch(current_task);
     return 0;
 }
 
 void task_run_first_ever_task(){
 
     if (!current_task){
-
+        
         panic("task_run_first_ever_task(): No current task exists dumbass\n");
     }
 
@@ -127,17 +129,16 @@ void task_run_first_ever_task(){
 int task_init(struct task* task, struct process* process){
 
     memset(task, 0, sizeof(struct task));
-
-    // Map the entire 4gb address space to its self
+    // Map the entire 4GB address space to its self
     task->page_directory = paging_new_4gb(PAGING_IS_PRESENT | PAGING_ACCESS_FROM_ALL);
-    
-    if (task->page_directory){
+    if (!task->page_directory){
 
         return -EIO;
     }
 
     task->registers.ip = GARYOS_PROGRAM_VIRTUAL_ADDRESS;
     task->registers.ss = USER_DATA_SEGMENT;
+    task->registers.cs = USER_CODE_SEGMENT;
     task->registers.esp = GARYOS_PROGRAM_VIRTUAL_STACK_ADDRESS_START;
 
     task->process = process;
