@@ -1,6 +1,7 @@
 [BITS 32]
 
 global _start
+global kernel_registers
 ;global problem
 
 extern kernel_main
@@ -42,6 +43,14 @@ _start:
 ; problem:
 ;     mov eax, 0
 ;     div eax
+
+kernel_registers:
+    mov ax, 10
+    mov ds, ax
+    mov es, ax
+    mov gs, ax
+    mov fs, ax
+    ret
 
 ; alignment issues solver
 times 512-($ - $$) db 0
