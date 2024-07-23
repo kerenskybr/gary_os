@@ -125,6 +125,27 @@ void task_save_state(struct task* task, struct interrupt_frame* frame){
     task->registers.esi = frame->esi;
 }
 
+int copy_string_to_task(struct task* task, void* virtual, void* phys, int max){
+
+    if (max >= PAGING_PAGE_SIZE){
+
+        return -EINVARG;
+    }
+
+    int res = 0;
+    char* tmp = kzalloc(max);
+
+    if (!tmp){
+        res = -ENOMEM;
+        goto out;
+    }
+
+    uint32_t* task_directory = task->page_directory->directory_entry;
+
+out:
+    return res
+}
+
 
 void task_current_save_state(struct interrupt_frame* frame){
 
