@@ -1,28 +1,29 @@
 #ifndef IDT_H
 #define IDT_H
-
 #include <stdint.h>
+
+// https://wiki.osdev.org/Interrupt_Descriptor_Table
 
 struct interrupt_frame;
 typedef void*(*ISR80H_COMMAND)(struct interrupt_frame* frame);
 
-struct idt_desc
-{
-    uint16_t offset_1; // Offset bits 0 - 15
-    uint16_t selector; // Selector thats in our GDT
-    uint8_t zero; // Does nothing, unused set to zero
-    uint8_t type_attr; // Descriptor type and attributes
-    uint16_t offset_2; // Offset bits 16-31
-} __attribute__((packed));
+struct idt_desc{
 
-struct idtr_desc
-{
-    uint16_t limit; // Size of descriptor table -1
-    uint32_t base; // Base address of the start of the interrupt descriptor table
-} __attribute__((packed));
+    uint16_t offset_1;      //Offset bits 0 - 15
+    uint16_t selector;      //Selector that is in our GDT
+    uint8_t zero;           // Does nothing, unused set to zero
+    uint8_t type_attr;      // Descriptor type and attributes
+    uint16_t offset_2;      // Offset bits 16-31
+} __attribute__((packed));   // Pack instructs tigheter tightly in memory
 
-struct interrupt_frame
-{
+struct idtr_desc{
+    
+    uint16_t limit;         // Size of descriptor table -1
+    uint32_t base;          // BAse addr of the start of interrup desc table
+} __attribute__((packed));  
+
+struct interrupt_frame{
+
     uint32_t edi;
     uint32_t esi;
     uint32_t ebp;
@@ -36,7 +37,8 @@ struct interrupt_frame
     uint32_t flags;
     uint32_t esp;
     uint32_t ss;
-} __attribute__((packed));
+
+} __attribute__((packed));  
 
 void idt_init();
 void enable_interrupts();
