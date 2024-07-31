@@ -133,7 +133,7 @@ int copy_string_from_task(struct task* task, void* virtual, void* phys, int max)
 
         return -EINVARG;
     }
-
+    
     int res = 0;
     char* tmp = kzalloc(max);
 
@@ -142,27 +142,26 @@ int copy_string_from_task(struct task* task, void* virtual, void* phys, int max)
         res = -ENOMEM;
         goto out;
     }
-
+    
     uint32_t* task_directory = task->page_directory->directory_entry;
     uint32_t old_entry = paging_get(task_directory, tmp);
     paging_map(task->page_directory, tmp, tmp, PAGING_IS_WRITEABLE | PAGING_IS_PRESENT | PAGING_ACCESS_FROM_ALL);
     paging_switch(task->page_directory);
     strncpy(tmp, virtual, max);
-
     kernel_page();
-
+    
     res = paging_set(task_directory, tmp, old_entry);
+    
     if (res < 0){
 
         res = -EIO;
         goto out_free;
     }
-
+    
     strncpy(phys, tmp, max);
-
+    
 out_free:
     kfree(tmp);
-
 out:
     return res;
 }
