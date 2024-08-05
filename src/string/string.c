@@ -1,7 +1,7 @@
 #include "string.h"
 
-char tolower(char s1)
-{
+char tolower(char s1){
+    
     if (s1 >= 65 && s1 <= 90)
     {
         s1 += 32;
@@ -10,8 +10,8 @@ char tolower(char s1)
     return s1;
 }
 
-int strlen(const char* ptr)
-{
+int strlen(const char* ptr){
+
     int i = 0;
     while(*ptr != 0)
     {
@@ -22,8 +22,8 @@ int strlen(const char* ptr)
     return i;
 }
 
-int strnlen(const char* ptr, int max)
-{
+int strnlen(const char* ptr, int max){
+
     int i = 0;
     for (i = 0; i < max; i++)
     {
@@ -34,8 +34,8 @@ int strnlen(const char* ptr, int max)
     return i;
 }
 
-int strnlen_terminator(const char* str, int max, char terminator)
-{
+int strnlen_terminator(const char* str, int max, char terminator){
+
     int i = 0;
     for(i = 0; i < max; i++)
     {
@@ -46,8 +46,8 @@ int strnlen_terminator(const char* str, int max, char terminator)
     return i;
 }
 
-int istrncmp(const char* s1, const char* s2, int n)
-{
+int istrncmp(const char* s1, const char* s2, int n){
+
     unsigned char u1, u2;
     while(n-- > 0)
     {
@@ -61,8 +61,9 @@ int istrncmp(const char* s1, const char* s2, int n)
 
     return 0;
 }
-int strncmp(const char* str1, const char* str2, int n)
-{
+
+int strncmp(const char* str1, const char* str2, int n){
+
     unsigned char u1, u2;
 
     while(n-- > 0)
@@ -78,8 +79,8 @@ int strncmp(const char* str1, const char* str2, int n)
     return 0;
 }
 
-char* strcpy(char* dest, const char* src)
-{
+char* strcpy(char* dest, const char* src){
+
     char* res = dest;
     while(*src != 0)
     {
@@ -93,8 +94,8 @@ char* strcpy(char* dest, const char* src)
     return res;
 }
 
-char* strncpy(char* dest, const char* src, int count)
-{
+char* strncpy(char* dest, const char* src, int count){
+
     int i = 0;
     for (i = 0; i < count-1; i++)
     {
@@ -108,11 +109,12 @@ char* strncpy(char* dest, const char* src, int count)
     return dest;
 }
 
-bool isdigit(char c)
-{
+bool isdigit(char c){
+
     return c >= 48 && c <= 57;
 }
-int tonumericdigit(char c)
-{
+
+int tonumericdigit(char c){
+
     return c - 48;
 }
