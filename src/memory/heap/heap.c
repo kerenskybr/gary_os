@@ -8,7 +8,7 @@
 // 0x01 = memory taken but not first block
 // 0x00 = memory block free
 
-static int heap_validade_table(void* ptr, void* end, struct heap_table* table){
+static int heap_validate_table(void* ptr, void* end, struct heap_table* table){
 
     int res = 0;
 
@@ -26,7 +26,7 @@ out:
 
 }
 
-static int heap_validade_alignment(void* ptr){
+static bool heap_validate_alignment(void* ptr){
 
     return ((unsigned int) ptr % GARYOS_HEAP_BLOCK_SIZE) == 0;
 }
@@ -35,7 +35,7 @@ int heap_create(struct heap* heap, void* ptr, void* end, struct heap_table* tabl
 
     int res = 0;
 
-    if (!heap_validade_alignment(ptr) || !heap_validade_alignment(end)){
+    if (!heap_validate_alignment(ptr) || !heap_validate_alignment(end)){
 
         res = -EINVARG;
         goto out;
@@ -45,7 +45,7 @@ int heap_create(struct heap* heap, void* ptr, void* end, struct heap_table* tabl
     heap->saddr = ptr;
     heap->table = table;
 
-    res = heap_validade_table(ptr, end, table);
+    res = heap_validate_table(ptr, end, table);
     
     if (res < 0){
         

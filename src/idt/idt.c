@@ -11,11 +11,11 @@ struct idtr_desc idtr_descriptor;
 static ISR80H_COMMAND isr80h_commands[GARYOS_MAX_ISR80H_COMMANDS];
 
 extern void idt_load(struct idtr_desc* ptr);
-extern void init21h();
+extern void int21h();
 extern void no_interrupt();
 extern void isr80h_wrapper();
 
-void init21h_handler(){
+void int21h_handler(){
     
     print("\nKey pressed\n");
     outb(0x20, 0x20);
@@ -53,7 +53,7 @@ void idt_init(){
     }
 
     idt_set(0, idt_zero);
-    idt_set(0x21, init21h);
+    idt_set(0x21, int21h);
     idt_set(0x80, isr80h_wrapper);
 
     // Load the interrupt desc table

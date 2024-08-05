@@ -1,10 +1,10 @@
 section .asm
 
-extern init21h_handler
+extern int21h_handler
 extern no_interrupt_handler
 extern isr80h_handler
 
-global init21h
+global int21h
 global idt_load
 global no_interrupt
 global enable_interrupts
@@ -29,9 +29,9 @@ idt_load:
     pop ebp
     ret
 
-init21h: ;keyboard iterrupt
+int21h: ;keyboard iterrupt
     pushad
-    call init21h_handler
+    call int21h_handler
     popad
     iret
 

@@ -111,7 +111,7 @@ struct gdt_structured gdt_structured[GARYOS_TOTAL_GDT_SEGMENTS] = {
 void kernel_main(){
     
     terminal_initialize();
-    print("Hello World!\nThis is a new line bitch");
+    //print("Hello World!\nThis is a new line bitch");
 
     //panic("\nTEsting kernel panic!\n");
 
