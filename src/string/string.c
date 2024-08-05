@@ -105,7 +105,7 @@ char* strcpy(char* dest, const char* src){
 char* strncpy(char* dest, const char* src, int count){
     
     int i = 0;
-    for (int i = 0; i < count; i++){
+    for (int i = 0; i < count-1; i++){
 
         if (src[i] == 0x00){
             break;
