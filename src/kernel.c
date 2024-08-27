@@ -165,8 +165,6 @@ void kernel_main(){
         panic("\nFailed to load blank.bin dummy\n");
     }
 
-    keyboard_push('A');
-
     task_run_first_ever_task();
 
     while(1){}
