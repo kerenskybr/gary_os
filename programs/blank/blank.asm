@@ -4,12 +4,24 @@ section .asm
 
 global _start
 
+
 _start:
-    push message
-    mov eax, 1 ; commmand print
+
+_loop:
+    call getkey
+    push eax
+    mov eax, 3 ; 3 is command put char
     int 0x80
     add esp, 4
-    jmp $
+
+    jmp _loop
+
+getkey:
+    mov eax, 2 ; comand getkey
+    int 0x80
+    cmp eax, 0x00
+    je getkey
+    ret
 
 section .data
 message: db 'Hello stupid world!', 1
