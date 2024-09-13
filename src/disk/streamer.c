@@ -45,7 +45,7 @@ int diskstreamer_read(struct disk_stream* stream, void* out, int total){
         goto out;
     }
 
-    int total_to_read = total > GARYOS_SECTOR_SIZE ? GARYOS_SECTOR_SIZE : total;
+
     for (int i = 0; i < total_to_read; i++){
 
         *(char*)out++ = buf[offset + i];
