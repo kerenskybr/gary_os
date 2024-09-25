@@ -4,6 +4,11 @@
 #include "config.h"
 #include "task.h"
 
+#define PROCESS_FILETYPE_ELF 0
+#define PROCESS_FILETYPE_BINARY 1
+
+typedef unsigned char PROCESS_FILETYPE;
+
 struct process{
 
     uint16_t id;
@@ -14,9 +19,14 @@ struct process{
 
     // THe malloc allocations of the process
     void* allocations[GARYOS_MAX_PROGRAM_ALLOCATIONS];
+    
+    PROCESS_FILETYPE filetype;
 
-    // Physical pointer to the proccess memory
-    void* ptr;
+    union{
+        // Physical pointer to the proccess memory
+        void* ptr;
+        struct elf_file* elf_file;
+    };
 
     //Phisical pointer to the stack mem
     void* stack;

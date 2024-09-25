@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 #include "elf.h"
 
 void* elf_get_entry_ptr(struct elf_header* elf_header){
