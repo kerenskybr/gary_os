@@ -32,6 +32,38 @@ int process_switch(struct process* process){
     return 0;
 }
 
+static int process_find_free_allocations_index(struct process* process){
+
+    int res = -ENOMEM;
+    for (int i = 0; i < GARYOS_MAX_PROGRAM_ALLOCATIONS; i++){
+
+        if (process->allocations[i] == 0){
+
+            res = i;
+            break;
+        }
+    }
+    return res;
+}
+
+void* process_malloc(struct process* process, size_t size){
+
+    void* ptr = kzalloc(size);
+    if (!ptr){
+
+        return 0;
+    }
+
+    int index = process_find_free_allocations_index(process);
+    if (index < 0){
+
+        return 0;
+    }
+    process->allocations[index] = ptr;
+
+    return ptr;
+}
+ 
 struct process* process_get(int process_id){
 
     if (process_id < 0 || process_id >= GARYOS_MAX_PROCESSES){
