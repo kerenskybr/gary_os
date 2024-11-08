@@ -1,8 +1,11 @@
 [BITS 32]
 
+section .asm
+
 global print:function
 global getkey:function
 global garyos_malloc:function
+global garyos_free:function
 
 ; void print(const char* message)
 print:
@@ -35,3 +38,14 @@ garyos_malloc:
     add esp, 4
     pop ebp
     ret
+
+; void garyos_free(void* ptr)
+garyos_free:
+    push ebp
+    mov ebp, esp
+    mov eax, 5 ; command 5 free
+    push dword[ebp+8]
+    int 0x80
+    add esp, 4
+    pop ebp
+    ret 
