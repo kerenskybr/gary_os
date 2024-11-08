@@ -63,6 +63,43 @@ void* process_malloc(struct process* process, size_t size){
 
     return ptr;
 }
+
+static bool process_is_process_pointer(struct process* process, void* ptr){
+
+    for (int i = 0; i < GARYOS_MAX_PROGRAM_ALLOCATIONS; i++){
+
+        if (process->allocations[i] == ptr){
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
+static void process_allocation_unjoin(struct process* process, void* ptr){
+
+    for (int i = 0; i < GARYOS_MAX_PROGRAM_ALLOCATIONS; i++){
+
+        if (process->allocations[i] == ptr){
+            
+            process->allocations[i] = 0x00;
+        }
+    }
+}
+
+void process_free(struct process* process, void* ptr){
+    // Not this process pointer so we cant free it
+    if (!process_is_process_pointer(process, ptr)){
+
+        return;
+    }
+    // unjoin the allocation
+    process_allocation_unjoin(process, ptr);
+
+    //free mem
+    kfree(ptr);
+}
  
 struct process* process_get(int process_id){
 
