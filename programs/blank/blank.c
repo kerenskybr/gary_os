@@ -5,6 +5,8 @@ int main(int argc, char** argv){
 
     print("Hello stupid world! Ended yet?\n");
 
+    print(itoa(8763));
+
     void* ptr = malloc(512);
     free(ptr);
 
