@@ -4,3 +4,4 @@
 *.asm.o
 build/*.o
 build/*/*/*.o
+*.elf
