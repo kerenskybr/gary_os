@@ -7,5 +7,6 @@ int getkey();
 
 void* garyos_malloc(size_t size);
 void garyos_free(void* ptr);
+void garyos_putchar(char c);
 
 #endif
